@@ -1,7 +1,7 @@
 import datetime
 
 # Store the next available id for all new notes
-id = 0
+last_id = 0
 
 class Note:
     '''Represent a note in the notebook. Match against a
