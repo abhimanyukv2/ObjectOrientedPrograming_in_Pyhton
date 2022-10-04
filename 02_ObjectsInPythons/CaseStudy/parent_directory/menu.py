@@ -39,7 +39,7 @@ class Menu:
         if not notes:
             notes = self.notebook.notes
         for note in notes:
-            print('{0}: {1}\n{2}'.format(note.id,note.tag,note.memo))
+            print('{0}: {1}\n{2}'.format(note.id,note.tags,note.memo))
     
     def search_notes(self):
         filter = input("Search for: ")
