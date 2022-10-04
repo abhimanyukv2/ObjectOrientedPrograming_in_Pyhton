@@ -50,7 +50,13 @@ class Notebook:
         #     if note.id == note_id:
         #         note.memo = memo
         #         break
-        self._find_note(note_id).memo = memo
+        '''If the note id does not exit then this code will not work'''
+        # self._find_note(note_id).memo = memo
+        note = self._find_note(note_id)
+        if note:
+            note.memo = memo
+            return True
+        return False
 
     def modify_tags(self, note_id, tags):
         '''Find the note with the given id and change its
@@ -59,7 +65,14 @@ class Notebook:
         #     if note.id == note_id:
         #         note.tags = tags
         #         break
-        self._find_note(note_id).tags = tags
+        '''If the note id does not exit then this code will not work'''
+        # self._find_note(note_id).tags = tags
+        note = self._find_note(note_id)
+        if note:
+            note.tags = tags
+            return True
+        return False
+
 
     def search(self, filter):
         '''Find all notes that match the given filter string.'''
