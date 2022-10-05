@@ -15,11 +15,6 @@ class Contact:
         self.email = email
         self.all_contacts.append(self)
 
-class Friend(Contact):
-    def __init__(self, name, email, phone):
-        super().__init__(name, email)
-        self.phone = phone
-
 class MailSender:
     def send_mail(self, massage):
         print('Sending Mail to ' + self.email)
@@ -34,3 +29,9 @@ class AddressHolder:
         self.city = city
         self.state = state
         self.code = code
+
+class Friend(Contact, AddressHolder):
+    def __init__(self, name, email, phone, street, city, state, code):
+        Contact.__init__(self, name, email)
+        AddressHolder.__init__(self, street, city, state, code)
+        self.phone = phone
