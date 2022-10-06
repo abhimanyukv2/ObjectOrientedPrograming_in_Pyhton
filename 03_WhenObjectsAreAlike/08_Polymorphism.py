@@ -5,6 +5,15 @@ class AudioFile:
         
         self.filename = filename
 
+class FlacFile:
+    def __init__(self, filename):
+        if not filename.endswith(".flac"):
+            raise Exception ('Invalid File Format')
+        self.filename = filename
+
+    def play(self):
+        print('Playing {} as flac'.format(self.filename))
+
 class MP3File(AudioFile):
     ext = "mp3"
     def play(self):
