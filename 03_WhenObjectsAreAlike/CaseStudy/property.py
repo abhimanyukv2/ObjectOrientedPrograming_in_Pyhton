@@ -71,3 +71,45 @@ class Apartment(Property):
         return parent_init
 
     prompt_init = staticmethod(prompt_init)
+
+class House(Property):
+    valid_garage = ('attached', 'detached', 'none')
+    vallid_fenced = ('yes', 'no')
+
+    def __init__(self, num_stories='', garage='', fenced='', **kwargs):
+        super().__init__(**kwargs)
+        self.garage = garage
+        self.fenced = fenced
+        self.num_stories = num_stories
+
+    def display(self):
+        super().display()
+        print('''
+            HOUSE DETAILS
+        =====================
+            Number of stories: {self.num_stories}
+            Garage: {self.garage}
+            Fenced Yard: {self.fenced}''')
+
+    def prompt_init():
+        parent_init = Property.prompt_init()
+        
+        def get_valid_input(input_string, valid_options):
+            input_string += '({})'.format(', '.join(valid_options))
+            responce = input(input_string)
+            while responce.lower() not in valid_options:
+                responce = input(input_string)
+            return responce
+
+        fenced = get_valid_input('Is the yard fenced? ',House.vallid_fenced)
+        garage = get_valid_input('Is there a garage? ',House.valid_garage)
+        num_stories = input('How many stories? ')
+
+        parent_init.update({
+            'fenced': fenced,
+            'garage': garage,
+            'num_stories': num_stories
+        })
+        return parent_init
+    
+    prompt_init = staticmethod(prompt_init)
