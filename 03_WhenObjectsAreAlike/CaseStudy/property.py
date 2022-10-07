@@ -14,15 +14,16 @@ class Property:
         Bathrooms: {self.num_baths}''')
 
     def prompt_init():
-        return dict(square_feet = input("Enter the square feet: "),
-                    beds = input('Enter number of bedrooms: '),
-                    baths = input('Enter number of baths: '))
+        return dict(square_feet=input("Enter the square feet: "),
+                    beds=input('Enter number of bedrooms: '),
+                    baths=input('Enter number of baths: '))
 
     prompt_init = staticmethod(prompt_init)
 
+
 class Apartment(Property):
-    valid_laundries = ('coin','ensuite','none')
-    valid_balconies = ('yes','no','solarium')
+    valid_laundries = ('coin', 'ensuite', 'none')
+    valid_balconies = ('yes', 'no', 'solarium')
 
     def __init__(self, balcony='', laundry='', **kwargs):
         super().__init__(**kwargs)
@@ -37,22 +38,36 @@ class Apartment(Property):
             Laundry: {self.laundry}
             Balcony: {self.balcony}''')
 
+    def prompt_init():
         parent_init = Property.prompt_init()
 
-        laundry = ''
+        def get_valid_input(input_string, valid_options):
+            input_string += '({})'.format(', '.join(valid_options))
+            responce = input(input_string)
+            while responce.lower() not in valid_options:
+                responce = input(input_string)
+            return responce
+
+        '''laundry = ''
         while laundry.lower() not in Apartment.valid_laundries:
             laundry = input('What laundry facilities does the property have? ({})'
-                            .format(','.join(Apartment.valid_laundries)))
+                            .format(','.join(Apartment.valid_laundries)))'''
 
-        balcony = ''
+        laundry = get_valid_input('What laundry facilities does the property have?',
+                                  Apartment.valid_laundries)
+
+        '''balcony = ''
         while balcony.lower() not in Apartment.valid_balconies:
             balcony = input('Does the property have a balcony? ({})'
-                            .format(','.join(Apartment.valid_balconies)))
+                            .format(','.join(Apartment.valid_balconies)))'''
+
+        balcony = get_valid_input('Does the property have a balcony? ',
+                                  Apartment.valid_balconies)
 
         parent_init.update({
             'laundry': laundry,
             'balcony': balcony
         })
         return parent_init
-        
+
     prompt_init = staticmethod(prompt_init)
