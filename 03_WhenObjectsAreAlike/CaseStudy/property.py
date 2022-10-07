@@ -6,7 +6,7 @@ class Property:
         self.num_baths = baths
 
     def display(self):
-        print('''
+        print(f'''
         PROPERTY DETAILS
     ===========================
         Square Footage: {self.square_feet}
@@ -32,7 +32,7 @@ class Apartment(Property):
 
     def display(self):
         super().display()
-        print('''
+        print(f'''
             APARTMENT DETAILS
         ==========================
             Laundry: {self.laundry}
@@ -85,7 +85,7 @@ class House(Property):
 
     def display(self):
         super().display()
-        print('''
+        print(f'''
             HOUSE DETAILS
         =====================
             Number of stories: {self.num_stories}
@@ -123,8 +123,8 @@ class Purchase:
         self.taxes = taxes
 
     def display(self):
-        # super().display()
-        print('''
+        super().display()
+        print(f'''
             PURCHASE DETAILS
         ==========================
             Selling price: {self.price}
@@ -141,14 +141,14 @@ class Purchase:
 
 class Rental:
     def __init__(self, furnished='', utilities='', rent='', **kwargs):
-        super.__init__(**kwargs)
+        super().__init__(**kwargs)
         self.furnished = furnished
         self.utilities = utilities
         self.rent = rent
 
     def display(self):
-        # super().display()
-        print('''
+        super().display()
+        print(f'''
             RENTAL DETAILS
         ======================
             Rent: {self.rent}
@@ -170,5 +170,14 @@ class Rental:
             furnished=get_valid_input(
                 'Is the Property furnished? ', ('yes', 'no'))
         )
+
+    prompt_init = staticmethod(prompt_init)
+
+
+class HouseRental(Rental, House):
+    def prompt_init():
+        init = House.prompt_init()
+        init.update(Rental.prompt_init())
+        return init
 
     prompt_init = staticmethod(prompt_init)
