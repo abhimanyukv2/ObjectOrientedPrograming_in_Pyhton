@@ -208,3 +208,37 @@ class HousePurchase(Purchase, House):
         return init
 
     prompt_init = staticmethod(prompt_init)
+
+
+class Agent:
+    def __init__(self):
+        self.property_list = []
+
+    def display_properties(self):
+        for property in self.property_list:
+            property.display()
+
+    type_map = {
+        ('house', 'rental'): HouseRental,
+        ('house', 'purchase'): HousePurchase,
+        ('apartment', 'rental'): ApartmentRental,
+        ('apartment', 'purchase'): ApartmentPurchase
+    }
+
+    def add_property(self):
+        
+        def get_valid_input(input_string, valid_options):
+            input_string += '({})'.format(','.join(valid_options))
+            responce = input(input_string)
+            while responce not in valid_options:
+                responce = input(input_string)
+            return responce
+
+        property_type = get_valid_input('What Type of property? ',
+                                        ('house', 'apartment')).lower()
+        payment_type = get_valid_input('What payment type? ',
+                                       ('purchase', 'rental')).lower()
+
+        PropertyClass = self.type_map[(property_type, payment_type)]
+        init_args = PropertyClass.prompt_init()
+        self.property_list.append(PropertyClass(**init_args))
