@@ -21,6 +21,17 @@ class Property:
     prompt_init = staticmethod(prompt_init)
 
 
+global get_valid_input
+
+
+def get_valid_input(input_string, valid_options):
+    input_string += '({})'.format(', '.join(valid_options))
+    responce = input(input_string)
+    while responce.lower() not in valid_options:
+        responce = input(input_string)
+    return responce
+
+
 class Apartment(Property):
     valid_laundries = ('coin', 'ensuite', 'none')
     valid_balconies = ('yes', 'no', 'solarium')
@@ -41,18 +52,10 @@ class Apartment(Property):
     def prompt_init():
         parent_init = Property.prompt_init()
 
-        def get_valid_input(input_string, valid_options):
-            input_string += '({})'.format(', '.join(valid_options))
-            responce = input(input_string)
-            while responce.lower() not in valid_options:
-                responce = input(input_string)
-            return responce
-
         '''laundry = ''
         while laundry.lower() not in Apartment.valid_laundries:
             laundry = input('What laundry facilities does the property have? ({})'
                             .format(','.join(Apartment.valid_laundries)))'''
-
         laundry = get_valid_input('What laundry facilities does the property have?',
                                   Apartment.valid_laundries)
 
@@ -60,7 +63,6 @@ class Apartment(Property):
         while balcony.lower() not in Apartment.valid_balconies:
             balcony = input('Does the property have a balcony? ({})'
                             .format(','.join(Apartment.valid_balconies)))'''
-
         balcony = get_valid_input('Does the property have a balcony? ',
                                   Apartment.valid_balconies)
 
@@ -94,13 +96,6 @@ class House(Property):
 
     def prompt_init():
         parent_init = Property.prompt_init()
-
-        def get_valid_input(input_string, valid_options):
-            input_string += '({})'.format(', '.join(valid_options))
-            responce = input(input_string)
-            while responce.lower() not in valid_options:
-                responce = input(input_string)
-            return responce
 
         fenced = get_valid_input('Is the yard fenced? ', House.vallid_fenced)
         garage = get_valid_input('Is there a garage? ', House.valid_garage)
@@ -156,14 +151,6 @@ class Rental:
             Furnished: {self.furnished}''')
 
     def prompt_init():
-
-        def get_valid_input(input_string, valid_options):
-            input_string += '({})'.format(','.join(valid_options))
-            responce = input(input_string)
-            while responce.lower() not in valid_options:
-                responce = input(input_string)
-            return responce
-
         return dict(
             rent=input('What is the monthly rent? '),
             utilities=input('What are the estimeted utilities? '),
@@ -226,14 +213,6 @@ class Agent:
     }
 
     def add_property(self):
-        
-        def get_valid_input(input_string, valid_options):
-            input_string += '({})'.format(','.join(valid_options))
-            responce = input(input_string)
-            while responce not in valid_options:
-                responce = input(input_string)
-            return responce
-
         property_type = get_valid_input('What Type of property? ',
                                         ('house', 'apartment')).lower()
         payment_type = get_valid_input('What payment type? ',
