@@ -72,6 +72,7 @@ class Apartment(Property):
 
     prompt_init = staticmethod(prompt_init)
 
+
 class House(Property):
     valid_garage = ('attached', 'detached', 'none')
     vallid_fenced = ('yes', 'no')
@@ -93,7 +94,7 @@ class House(Property):
 
     def prompt_init():
         parent_init = Property.prompt_init()
-        
+
         def get_valid_input(input_string, valid_options):
             input_string += '({})'.format(', '.join(valid_options))
             responce = input(input_string)
@@ -101,8 +102,8 @@ class House(Property):
                 responce = input(input_string)
             return responce
 
-        fenced = get_valid_input('Is the yard fenced? ',House.vallid_fenced)
-        garage = get_valid_input('Is there a garage? ',House.valid_garage)
+        fenced = get_valid_input('Is the yard fenced? ', House.vallid_fenced)
+        garage = get_valid_input('Is there a garage? ', House.valid_garage)
         num_stories = input('How many stories? ')
 
         parent_init.update({
@@ -111,8 +112,9 @@ class House(Property):
             'num_stories': num_stories
         })
         return parent_init
-    
+
     prompt_init = staticmethod(prompt_init)
+
 
 class Purchase:
     def __init__(self, price='', taxes='', **kwargs):
@@ -121,7 +123,7 @@ class Purchase:
         self.taxes = taxes
 
     def display(self):
-        super().display()
+        # super().display()
         print('''
             PURCHASE DETAILS
         ==========================
@@ -130,8 +132,43 @@ class Purchase:
 
     def prompt_init():
         return dict(
-            price = input("What is the selling price? "),
-            taxes = input('What is the estimated taxes? ')
+            price=input("What is the selling price? "),
+            taxes=input('What is the estimated taxes? ')
+        )
+
+    prompt_init = staticmethod(prompt_init)
+
+
+class Rental:
+    def __init__(self, furnished='', utilities='', rent='', **kwargs):
+        super.__init__(**kwargs)
+        self.furnished = furnished
+        self.utilities = utilities
+        self.rent = rent
+
+    def display(self):
+        # super().display()
+        print('''
+            RENTAL DETAILS
+        ======================
+            Rent: {self.rent}
+            Estimeted Utilities: {self.utilities}
+            Furnished: {self.furnished}''')
+
+    def prompt_init():
+
+        def get_valid_input(input_string, valid_options):
+            input_string += '({})'.format(','.join(valid_options))
+            responce = input(input_string)
+            while responce.lower() not in valid_options:
+                responce = input(input_string)
+            return responce
+
+        return dict(
+            rent=input('What is the monthly rent? '),
+            utilities=input('What are the estimeted utilities? '),
+            furnished=get_valid_input(
+                'Is the Property furnished? ', ('yes', 'no'))
         )
 
     prompt_init = staticmethod(prompt_init)
