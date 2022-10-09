@@ -4,4 +4,10 @@ def no_return():
     print('This line will never execute')
     return "I won't be returned"
 
-no_return()
+def call_exceptor():
+    print('call_exceptor starts here...')
+    no_return()
+    print('an exception was raised')
+    print("...so these lines don't run")
+
+call_exceptor()
