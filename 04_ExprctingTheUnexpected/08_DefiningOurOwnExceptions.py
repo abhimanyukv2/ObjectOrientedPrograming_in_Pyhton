@@ -7,4 +7,10 @@ class InvalidWithdrawl(Exception):
     def overage(self):
         return self.amount - self.balance
 
-raise InvalidWithdrawl(25,50)
+# raise InvalidWithdrawl(25,50)
+
+try:
+    raise InvalidWithdrawl(25,50)
+except InvalidWithdrawl as e:
+    print("I'm sorry, but you withdrawl is more than your balance"
+            "${}".format(e.overage()))
