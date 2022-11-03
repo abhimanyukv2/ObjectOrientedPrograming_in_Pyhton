@@ -39,6 +39,15 @@ class InvalidUsername(AuthException):
 class InvalidPassword(AuthException):
     pass
 
+class PermissionError(Exception):
+    pass
+
+class NotLoggedInError(AuthException):
+    pass
+
+class NotPermittedError(AuthException):
+    pass
+
 class Authenticator:
     def __init__(self):
         '''Construct an authenticator to manage
@@ -71,7 +80,7 @@ class Authenticator:
 
 authenticator = Authenticator()
 
-class Athorizor:
+class Authorizor:
     def __init__(self, authenticator):
         self.authenticator = authenticator
         self.permission = {}
@@ -95,3 +104,18 @@ class Athorizor:
             if username not in self.authenticator.users:
                 raise InvalidUsername(username)
             perm_set.add(username)
+
+    def check_permission(self, perm_name, username):
+        if not self.authenticator.is_logged_in(username):
+            raise NotLoggedInError(username)
+        try:
+            perm_set = self.permission[perm_name]
+        except KeyError:
+            raise PermissionError('Permissiom does not exit')
+        else:
+            if username not in perm_set:
+                raise NotPermittedError(username)
+            else:
+                return True
+
+authorizor = Authorizor(authenticator)
