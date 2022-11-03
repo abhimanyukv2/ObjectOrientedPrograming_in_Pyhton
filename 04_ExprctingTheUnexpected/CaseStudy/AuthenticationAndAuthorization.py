@@ -68,3 +68,5 @@ class Authenticator:
         if username in self.users:
             return self.users[username].is_logged_in
         return False
+
+authenticator = Authenticator()
