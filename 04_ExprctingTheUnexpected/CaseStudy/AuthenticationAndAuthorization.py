@@ -70,3 +70,28 @@ class Authenticator:
         return False
 
 authenticator = Authenticator()
+
+class Athorizor:
+    def __init__(self, authenticator):
+        self.authenticator = authenticator
+        self.permission = {}
+
+    def add_permission(self, perm_name):
+        '''Create a new permission that user can be added to.'''
+        try:
+            perm_set = self.permission[perm_name]
+        except KeyError:
+            self.permission[perm_name] = set()
+        else:
+            raise PermissionError("Permisiion Exists")
+
+    def permit_user(self, perm_name, username):
+        '''Grant the given permissin to the user.'''
+        try:
+            perm_set = self.permission[perm_name]
+        except KeyError:
+            raise PermissionError('Permissin does not exist')
+        else:
+            if username not in self.authenticator.users:
+                raise InvalidUsername(username)
+            perm_set.add(username)
