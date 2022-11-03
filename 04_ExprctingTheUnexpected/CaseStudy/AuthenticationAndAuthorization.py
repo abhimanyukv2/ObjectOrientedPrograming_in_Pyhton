@@ -99,7 +99,7 @@ class Authorizor:
         try:
             perm_set = self.permission[perm_name]
         except KeyError:
-            raise PermissionError('Permissin does not exist')
+            raise PermissionError('Permission does not exist')
         else:
             if username not in self.authenticator.users:
                 raise InvalidUsername(username)
