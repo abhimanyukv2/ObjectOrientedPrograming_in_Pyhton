@@ -1,26 +1,20 @@
 class Document:
     def __init__(self):
         self.characters = []
-        self.cursor = 0
+        self.cursor = Cursor(self)
         self.filename = ''
 
     def insert(self, character):
-        self.characters.insert(self.cursor, character)
-        self.cursor += 1
+        self.characters.insert(self.cursor.position, character)
+        self.cursor.forward()
 
     def delete(self):
-        del self.characters[self.cursor]
+        del self.characters[self.cursor.position]
 
     def save(self):
         f = open(self.filename, 'w')
         f.write(''.join(self.characters))
         f.close
-
-    def forward(self):
-        self.cursor += 1
-    
-    def back(self):
-        self.cursor -= 1
 
 class Cursor:
     def __init__(self, document):
