@@ -16,6 +16,10 @@ class Document:
         f.write(''.join(self.characters))
         f.close
 
+    @property
+    def string(self):
+        return "".join(self.characters)
+
 class Cursor:
     def __init__(self, document):
         self.document = document
