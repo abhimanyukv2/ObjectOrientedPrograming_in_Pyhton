@@ -16,11 +16,11 @@ class Document:
     def save(self):
         f = open(self.filename, 'w')
         f.write(''.join(self.characters))
-        f.close
+        f.close()
 
     @property
     def string(self):
-        return "".join(self.characters)
+        return "".join(str(c) for c in self.characters)
 
 class Cursor:
     def __init__(self, document):
