@@ -34,14 +34,14 @@ class Cursor:
         self.position -= 1
 
     def home(self):
-        while self.document.characters[self.position - 1] != '\n':
+        while self.document.characters[self.position - 1].charater != '\n':
             self.position -= 1
             if self.position == 0:
                 # Got to the beginning of file before new line
                 break
 
     def end(self):
-        while self.position < len(self.document.characters) and self.document.characters[self.position] != '\n':
+        while self.position < len(self.document.characters) and self.document.characters[self.position].charater != '\n':
             self.position += 1
 
 class Character:
