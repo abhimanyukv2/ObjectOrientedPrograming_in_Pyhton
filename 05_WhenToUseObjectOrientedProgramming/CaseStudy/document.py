@@ -5,6 +5,8 @@ class Document:
         self.filename = ''
 
     def insert(self, character):
+        if not hasattr(character, 'character'):
+            character = Character(character)
         self.characters.insert(self.cursor.position, character)
         self.cursor.forward()
 
